@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title>
+    </title>
+  </head>
+  <body>
+    <h1>Hello, World!  I am located at ${location}</h1>
+    <h2>I provide access to ${len(containers)} Child Resources</h2>
+    <ul>
+      <li py:for='container in containers'><a href="${container}">${container}</a></li>
+    </ul>
+  </body>
+</html>

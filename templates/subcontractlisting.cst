@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      SubcontractListing Project(<?cs var:project.id ?>) Contract(<?cs var:contract.id ?>)
+    </title>
+  </head>
+  <body>
+    <h1>Complete Subcontracts</h1>
+    <table border="1">
+      <thead>
+        <th>Subcontract</th>
+        <th>Date</th>
+        <th>Phase Code</th>
+        <th>Description</th>
+        <th>Vendor ID</th>
+        <th>Organization</th>
+        <th>Subcontract Amount</th>
+        <th>Paid to Date</th>
+        <th>Retention Held</th>
+        <th>Balance Due</th>
+      </thead>
+      <tfoot>
+        <tr>
+          <th colspan="6">Totals</th>
+          <th><?cs var:totalSubcontractAmount ?></th>
+          <th><?cs var:totalPaidToDate ?></th>
+          <th><?cs var:totalRetentionHeld ?></th>
+          <th><?cs var:totalBalanceDue ?></th>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr>
+          <td><?cs var:contract.contractNumber ?></td>
+          <td><?cs var:contract.contractDate ?></td>
+          <td><?cs var:contract.id ?></td>
+          <td><?cs var:contract.description ?></td>
+          <td><?cs var:contract.vendorID ?></td>
+          <td><?cs var:contract.childOrganization.name ?></td>
+          <td><?cs var:contract.budgetAmount ?></td>
+          <td><?cs var:contract.paymentToDate ?></td>
+          <td><?cs var:contract.retentionHeld ?></td>
+          <td><?cs var:contract.balanceDue ?></td>
+        </tr>
+        <?cs each:c = contracts ?>
+        <tr>
+          <td><?cs var:c.contractNumber ?></td>
+          <td><?cs var:c.contractDate ?></td>
+          <td><?cs var:c.id ?></td>
+          <td><?cs var:c.description ?></td>
+          <td><?cs var:c.vendorID ?></td>
+          <td><?cs var:c.childOrganization.name ?></td>
+          <td><?cs var:c.budgetAmount ?></td>
+          <td><?cs var:c.paymentToDate ?></td>
+          <td><?cs var:c.retentionHeld ?></td>
+          <td><?cs var:c.balanceDue ?></td>
+        </tr>
+        <?cs /each ?>
+      </tbody>
+    </table>
+    <h1>Incomplete Subcontracts</h1>
+    <table border="1">
+      <thead>
+        <th>Subcontract</th>
+        <th>Date</th>
+        <th>Phase Code</th>
+        <th>Description</th>
+        <th>Vendor ID</th>
+        <th>Organization</th>
+        <th>Subcontract Amount</th>
+        <th>Paid to Date</th>
+        <th>Retention Held</th>
+        <th>Balance Due</th>
+      </thead>
+      <tfoot>
+      </tfoot>
+      <tbody>
+        <?cs each:c = incompleteContracts ?>
+        <tr>
+          <td><?cs var:c.contractNumber ?></td>
+          <td><?cs var:c.contractDate ?></td>
+          <td><?cs var:c.id ?></td>
+          <td><?cs var:c.description ?></td>
+          <td><?cs var:c.vendorID ?></td>
+          <td><?cs var:c.childOrganization.name ?></td>
+          <td><?cs var:c.budgetAmount ?></td>
+          <td><?cs var:c.paymentToDate ?></td>
+          <td><?cs var:c.retentionHeld ?></td>
+          <td><?cs var:c.balanceDue ?></td>
+        </tr>
+        <?cs /each ?>
+      </tbody>
+    </table>
+  </body>
+</html>
+

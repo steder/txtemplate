@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/">
+  <h1>${object_name} Container</h1>
+  <h2>Contains ${number_contained} ${object_name} child resources</h2>
+  <dl>
+    <lh>Addressing children:</lh>
+    <DT>Access a child<DD>${container_name}/&lt;childID&gt;</DD></DT>
+    <DT>Access a child in JSON format<DD>${container_name}/&lt;childID&gt;?format=json</DD></DT>
+    <DT>Access a child attribute<DD>${container_name}/&lt;childID&gt;/&lt;childAttribute&gt;</DD></DT>
+    <DT>Search children<DD>${container_name}/search?&lt;childAttribute1&gt;=&lt;searchValue1&gt;[&amp;&lt;childAttribute2&gt;=&lt;searchValue2&gt;, &amp;...]</DD></DT>
+    <DT>Count search results<DD>${container_name}/search?&lt;childAttribute1&gt;=&lt;searchValue1&gt;[&amp;&lt;childAttribute2&gt;=&lt;searchValue2&gt;, &amp;...]&amp;format=json&amp;count</DD></DT>
+  </dl>
+</html>

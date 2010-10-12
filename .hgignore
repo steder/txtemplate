@@ -5,6 +5,7 @@ syntax: glob
 *~
 *.log
 *.pid
+*.DS_Store
 
 # switch to regexp syntax.
 syntax: regexp

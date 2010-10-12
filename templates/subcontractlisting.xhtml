@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title>
+      SubcontractListing Project(${project.id}) Contract(${contract.id})
+    </title>
+  </head>
+  <body>
+    <h1>Complete Subcontracts</h1>
+    <table border="1">
+      <thead>
+        <th>Subcontract</th>
+        <th>Date</th>
+        <th>Phase Code</th>
+        <th>Description</th>
+        <th>Vendor ID</th>
+        <th>Organization</th>
+        <th>Subcontract Amount</th>
+        <th>Paid to Date</th>
+        <th>Retention Held</th>
+        <th>Balance Due</th>
+      </thead>
+      <tfoot>
+        <tr>
+          <th colspan="6">Totals</th>
+          <th>${totalSubcontractAmount}</th>
+          <th>${totalPaidToDate}</th>
+          <th>${totalRetentionHeld}</th>
+          <th>${totalBalanceDue}</th>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr>
+          <td>${contract.contractNumber}</td>
+          <td>${contract.contractDate}</td>
+          <td>${contract.id}</td>
+          <td>${contract.description}</td>
+          <td>${contract.vendorID}</td>
+          <td>${contract.childOrganization.name}</td>
+          <td>${contract.budgetAmount}</td>
+          <td>${contract.paymentToDate}</td>
+          <td>${contract.retentionHeld}</td>
+          <td>${contract.balanceDue}</td>
+        </tr>
+        <tr py:for="c in contracts">
+          <td>${c.contractNumber}</td>
+          <td>${c.contractDate}</td>
+          <td>${c.id}</td>
+          <td>${c.description}</td>
+          <td>${c.vendorID}</td>
+          <td>${c.childOrganization.name}</td>
+          <td>${c.budgetAmount}</td>
+          <td>${c.paymentToDate}</td>
+          <td>${c.retentionHeld}</td>
+          <td>${c.balanceDue}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h1>Incomplete Subcontracts</h1>
+    <table border="1">
+      <thead>
+        <th>Subcontract</th>
+        <th>Date</th>
+        <th>Phase Code</th>
+        <th>Description</th>
+        <th>Vendor ID</th>
+        <th>Organization</th>
+        <th>Subcontract Amount</th>
+        <th>Paid to Date</th>
+        <th>Retention Held</th>
+        <th>Balance Due</th>
+      </thead>
+      <tfoot>
+      </tfoot>
+      <tbody>
+        <tr py:for="c in incompleteContracts">
+          <td>${c.contractNumber}</td>
+          <td>${c.contractDate}</td>
+          <td>${c.id}</td>
+          <td>${c.description}</td>
+          <td>${c.vendorID}</td>
+          <td>${c.childOrganization.name}</td>
+          <td>${c.budgetAmount}</td>
+          <td>${c.paymentToDate}</td>
+          <td>${c.retentionHeld}</td>
+          <td>${c.balanceDue}</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
+

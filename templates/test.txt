@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Error</title>
+  </head>
+  <body>
+    <div id="request">
+      $request
+    </div>
+    <pre><code id="message">
+      ${message}
+    </code></pre>
+  </body>
+</html>

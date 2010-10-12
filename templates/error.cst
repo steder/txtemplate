@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Error</title>
+  </head>
+  <body>
+    <div id="request">
+      <?cs var:request ?>
+    </div>
+    <div id="segments">
+      <?cs var:segments ?>
+      <?cs each:segment = segments ?>
+        <div><?cs var:segment ?></div>
+      <?cs /each ?>
+    </div>
+    <pre><code id="message">
+      <?cs var:message ?>
+    </code></pre>
+  </body>
+</html>

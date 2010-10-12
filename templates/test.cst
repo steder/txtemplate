@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Error</title>
+  </head>
+  <body>
+    <div id="request">
+      <?cs var:request ?>
+    </div>
+    <div id="segments">
+      <?cs var:segments ?>
+      <?cs each:segment = segments ?>
+        <div><?cs var:segment ?><?cs each:letter = segment ?><p><?cs var:letter ?></p><?cs /each ?></div>
+      <?cs /each ?>
+    </div>
+    <pre><code id="message">
+      <?cs var:message ?>
+    </code></pre>
+    <div id="dict">
+      <p><?cs var:dict.test ?></p>
+      <?cs each:item = dict.test_list ?>
+        <p><?cs var:item ?></p>
+      <?cs /each ?>
+      <?cs each:item = dict.test_dict ?>
+        <p><?cs var:item ?></p>
+      <?cs /each ?>
+    </div>
+  </body>
+</html>

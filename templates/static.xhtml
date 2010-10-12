@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/">
+  <head>
+    <title>
+    </title>
+  </head>
+  <body>
+    <h2>${len(directories)} Static Resources</h2>
+    <ul>
+      <li py:for='directory in directories'><a href="static/${directory}">${directory}</a></li>
+    </ul>
+  </body>
+</html>
