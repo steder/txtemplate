@@ -11,7 +11,7 @@ try:
 except ImportError, e:
     genshitemplate = None
 from twisted.internet import defer, reactor
-from twisted.python import components, log
+from twisted.python import components
 from zope import interface
 
 from txtemplate import clearsilver
@@ -35,7 +35,7 @@ class StringTemplateAdapter(object):
     """Adapter that provides itemplate.ITemplate for
     Python's standard string.Template.  This provides
     a basic level of functionality without requiring a
-    real templating library.  
+    real templating library.
     """
     interface.implements(itemplate.ITemplate)
     def __init__(self, template):
@@ -43,7 +43,7 @@ class StringTemplateAdapter(object):
 
     def render_blocking(self, **kwargs):
         rendered = self.template.substitute(kwargs)
-        return rendered 
+        return rendered
 
     def _render(self, kwargs):
         try:
@@ -61,7 +61,7 @@ class StringTemplateAdapter(object):
             "Failed to generate template %s because %s"%(
             self.template, reason)
             )
-    
+
     def render(self, **kwargs):
         self._deferred = defer.Deferred()
         self._deferred.addCallbacks(self._rendered, self._failed)
@@ -124,7 +124,6 @@ class GenshiTemplateAdapter(object):
         Hopefully increasing the number of steps per timeslice will
         significantly improve performance.
         """
-        log.msg("running _populateBuffer...")
         try:
             for x in xrange(n):
                 output = stream.next()
@@ -142,7 +141,6 @@ class GenshiTemplateAdapter(object):
         return "Failed to generate template %s because %s"%(self.template, reason)
 
     def _rendered(self, ignore):
-        log.msg("template rendered")
         result = self._buffer.getvalue()
         self._buffer.close()
         self._buffer = None
@@ -240,7 +238,7 @@ class ClearsilverTemplateAdapter(object):
             "Failed to generate template %s because %s"%(
             self.template, reason)
             )
-    
+
     def render(self, hdf=None, **kwargs):
         self.hdf = hdf
         self.kwargs = kwargs
@@ -250,7 +248,7 @@ class ClearsilverTemplateAdapter(object):
         return self._deferred
 
 
-if clearsilver.CS is not None:        
+if clearsilver.CS is not None:
     components.registerAdapter(
         ClearsilverTemplateAdapter,
         clearsilver.Template,
