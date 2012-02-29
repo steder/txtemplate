@@ -73,7 +73,8 @@ to render a lovely Genshi template to say Hello World in HTML::
     reactor.run()
 
 
-
+This example is included in `txtemplate/examples/txweb.py` and the
+`root.xhtml` template is in `txtemplate/examples/templates/root.xhtml`.
 
 
 
