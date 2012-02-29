@@ -14,8 +14,7 @@ Supported Template Engines
 
  - ClearSilver
  - Genshi
-
-Jinja2 support coming soon!
+ - Jinja2
 
 ------------------------------------------
 Getting Started
