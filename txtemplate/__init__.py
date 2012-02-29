@@ -17,6 +17,6 @@ from .templates import GenshiTemplateLoader
 from .templates import Jinja2TemplateLoader
 
 
-__all__ = [ClearsilverTemplateLoader,
-           GenshiTemplateLoader,
-           Jinja2TemplateLoader]
+__all__ = ["ClearsilverTemplateLoader",
+           "GenshiTemplateLoader",
+           "Jinja2TemplateLoader"]
