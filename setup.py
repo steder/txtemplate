@@ -16,5 +16,13 @@ setup(name='txTemplate',
       packages=['txtemplate',],
       test_suite="txtemplate.test",
       install_requires=["genshi",
+                        "jinja2",
                         "twisted"],
-     )
+      license="MIT",
+      classifiers=[
+          'Development Status :: 3 - Alpha',
+          'Intended Audience :: Developers',
+          'License :: OSI Approved :: MIT',
+          'Programming Language :: Python',
+          ]
+)
