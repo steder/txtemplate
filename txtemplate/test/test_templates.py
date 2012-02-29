@@ -11,6 +11,81 @@ TEMPLATE_DIR = filepath.FilePath(__file__
                                  ).parent().parent().child("templates").path
 
 
+class TestClearsilverTemplates(unittest.TestCase):
+    if clearsilver.CS is None:
+        skip = "Skipping Clearsilver tests because Clearsilver is not installed."
+
+    def setUp(self):
+        self.c = {"request":"foo",
+                  "segments":["hello","world"],
+                  "message":"error message",
+                  }
+
+        self.loader = templates.ClearsilverTemplateLoader(
+            TEMPLATE_DIR
+            )
+
+    class TestClass(object):
+        someProperty = "Some Property Value"
+        def __str__(self):
+            return self.someProperty
+
+    def test_loader_failure(self):
+        self.assertRaises(templates.TemplateException, self.loader.load, "filethatdoesnotexist.cst")
+
+    def test_loader_success(self):
+        template = self.loader.load("test.cst")
+        self.assertTrue(isinstance(template, templates.ClearsilverTemplateAdapter))
+
+    def test_render_blocking(self):
+        template = self.loader.load("test.cst")
+        xhtml = template.render_blocking(**self.c)
+        self.assertTrue(xhtml.find("foo") !=-1)
+
+    def test_render_blocking_list(self):
+        template = self.loader.load("test.cst")
+        xhtml = template.render_blocking(**self.c)
+        self.assertTrue(xhtml.find("<div>hello</div>") !=-1)
+
+    def test_render_blocking_list_objects(self):
+        template = self.loader.load("test.cst")
+        self.c["segments"][0] = self.TestClass()
+        xhtml = template.render_blocking(**self.c)
+        self.assertTrue(xhtml.find("<div>Some Property Value</div>") !=-1)
+
+    def test_render_blocking_list_of_lists(self):
+        template = self.loader.load("test.cst")
+        self.c["segments"][0] = ["h","e","l","l","o"]
+        xhtml = template.render_blocking(**self.c)
+        self.assertTrue(xhtml.find("<p>h</p>") !=-1)
+
+    def test_render_blocking_dict(self):
+        template = self.loader.load("test.cst")
+        self.c['dict'] = {"test":"1 key",
+                          "test_list":[1,2,3],
+                          "test_dict":{"nested":"2 key",
+                                       "nested_list":[4,5,6],
+                                       },
+                          }
+        xhtml = template.render_blocking(**self.c)
+        self.assertTrue(xhtml.find("<p>1 key</p>") !=-1)
+        self.assertTrue(xhtml.find("<p>2 key</p>") !=-1)
+
+    def test_render_blocking_hdf(self):
+        template = self.loader.load("test.cst")
+        hdf = clearsilver.hdfFromKwargs(**self.c)
+        xhtml = template.render_blocking(hdf=hdf)
+        self.assertTrue(xhtml.find("foo") !=-1)
+
+    def _success(self, result):
+        self.assertTrue(result.find("</html>")!=-1)
+
+    def test_render_success(self):
+        template = self.loader.load("test.cst")
+        d = template.render(**self.c)
+        d.addCallback(self._success)
+
+
 class TestGenshiTemplates(unittest.TestCase):
     if templates.genshitemplate is None:
         skip = "Skipping Genshi tests because genshi is not installed."
@@ -67,79 +142,36 @@ class TestGenshiTemplates(unittest.TestCase):
         return d
 
 
-class TestClearsilverTemplates(unittest.TestCase):
-    if clearsilver.CS is None:
-        skip = "Skipping Clearsilver tests because Clearsilver is not installed."
+class TestJinja2Templates(unittest.TestCase):
+    if templates.jinja2 is None:
+        skip = "Skipping Jinja2 tests because jinja2 is not installed."
 
     def setUp(self):
         self.c = {"request":"foo",
                   "segments":["hello","world"],
-                  "message":"error message",
+                  "message":"error message"
                   }
+        self.loader = templates.Jinja2TemplateLoader(TEMPLATE_DIR)
 
-        self.loader = templates.ClearsilverTemplateLoader(
-            TEMPLATE_DIR
-            )
-
-    class TestClass(object):
-        someProperty = "Some Property Value"
-        def __str__(self):
-            return self.someProperty
-        
     def test_loader_failure(self):
-        self.assertRaises(templates.TemplateException, self.loader.load, "filethatdoesnotexist.cst")
+        self.assertRaises(templates.TemplateException, self.loader.load, "filethatdoesnotexist.jinja2")
 
     def test_loader_success(self):
-        template = self.loader.load("test.cst")
-        self.assertTrue(isinstance(template, templates.ClearsilverTemplateAdapter))
-    
+        template = self.loader.load("test.jinja2")
+        self.assertTrue(isinstance(template, templates.Jinja2TemplateAdapter))
+
     def test_render_blocking(self):
-        template = self.loader.load("test.cst")
-        xhtml = template.render_blocking(**self.c)
-        self.assertTrue(xhtml.find("foo") !=-1)
-
-    def test_render_blocking_list(self):
-        template = self.loader.load("test.cst")
-        xhtml = template.render_blocking(**self.c)
-        self.assertTrue(xhtml.find("<div>hello</div>") !=-1)
-    
-    def test_render_blocking_list_objects(self):
-        template = self.loader.load("test.cst")
-        self.c["segments"][0] = self.TestClass()
-        xhtml = template.render_blocking(**self.c)
-        self.assertTrue(xhtml.find("<div>Some Property Value</div>") !=-1)
-
-    def test_render_blocking_list_of_lists(self):
-        template = self.loader.load("test.cst")
-        self.c["segments"][0] = ["h","e","l","l","o"]
-        xhtml = template.render_blocking(**self.c)
-        self.assertTrue(xhtml.find("<p>h</p>") !=-1)
-
-    def test_render_blocking_dict(self):
-        template = self.loader.load("test.cst")
-        self.c['dict'] = {"test":"1 key",
-                          "test_list":[1,2,3],
-                          "test_dict":{"nested":"2 key",
-                                       "nested_list":[4,5,6],
-                                       },
-                          }
-        xhtml = template.render_blocking(**self.c)
-        self.assertTrue(xhtml.find("<p>1 key</p>") !=-1)
-        self.assertTrue(xhtml.find("<p>2 key</p>") !=-1)
-        
-    def test_render_blocking_hdf(self):
-        template = self.loader.load("test.cst")
-        hdf = clearsilver.hdfFromKwargs(**self.c)
-        xhtml = template.render_blocking(hdf=hdf)
-        self.assertTrue(xhtml.find("foo") !=-1)
+        template = self.loader.load("test.jinja2")
+        html = template.render_blocking(**self.c)
+        self.assertTrue(html.find("foo") !=-1)
 
     def _success(self, result):
-        self.assertTrue(result.find("</html>")!=-1)
-
-    def test_render_success(self):
-        template = self.loader.load("test.cst")
+        self.assertTrue(result.find("foo")!=-1)
+    def test_render(self):
+        template = self.loader.load("test.jinja2")
         d = template.render(**self.c)
         d.addCallback(self._success)
+        return d
 
 
 class TestStringTemplates(unittest.TestCase):
@@ -157,14 +189,14 @@ class TestStringTemplates(unittest.TestCase):
         someProperty = "Some Property Value"
         def __str__(self):
             return self.someProperty
-        
+
     def test_loader_failure(self):
         self.assertRaises(templates.TemplateException, self.loader.load, "filethatdoesnotexist.cst")
 
     def test_loader_success(self):
         template = self.loader.load("test.txt")
         self.assertTrue(isinstance(template, templates.StringTemplateAdapter))
-    
+
     def test_render_blocking(self):
         template = self.loader.load("test.txt")
         xhtml = template.render_blocking(**self.c)

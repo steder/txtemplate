@@ -3,7 +3,6 @@
 Interfaces for the txTemplate
 """
 
-
 from zope import interface
 
 
