@@ -2,7 +2,7 @@
 Templates support for Twisted projects
 """
 
-import cStringIO
+import StringIO
 import os
 import string
 
@@ -134,7 +134,7 @@ class GenshiTemplateAdapter(object):
     interface.implements(itemplate.ITemplate)
 
     def __init__(self, template):
-        self._buffer = cStringIO.StringIO()
+        self._buffer = StringIO.StringIO()
         self._stream = None
         self.template = template
         self.delayedCall = None
@@ -173,7 +173,7 @@ class GenshiTemplateAdapter(object):
         self._buffer = None
         if self.delayedCall and self.delayedCall.active():
             self.delayedCall.cancel()
-        return result
+        return result.encode('UTF-8')
 
     def render(self, **kwargs):
         self._stream = self.template.generate(**kwargs)
