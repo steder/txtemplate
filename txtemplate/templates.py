@@ -23,8 +23,8 @@ from zope import interface
 from txtemplate import clearsilver
 from txtemplate import itemplate
 
-CALL_DELAY = 0.001
-POPULATE_N_STEPS = 100
+CALL_DELAY = 0.00001
+POPULATE_N_STEPS = 10000
 
 
 class TemplateException(Exception):
@@ -252,19 +252,22 @@ if jinja2 is not None:
 class Jinja2TemplateLoader(object):
     interface.implements(itemplate.ITemplateLoader)
 
-    def __init__(self, path):
+    def __init__(self, path, **options):
         self.path = path
+        self.options = {"auto_reload": False}
+        self.options.update(options)
         if not self.path:
             self.path = os.curdir
 
-        self.environment = jinja2.Environment()
         self.loader = jinja2.FileSystemLoader(
-            os.path.join(os.path.abspath(self.path)), encoding="utf-8"
+            os.path.join(os.path.abspath(self.path)),
+            encoding="utf-8"
         )
+        self.environment = jinja2.Environment(loader=self.loader, **self.options)
 
     def load(self, name):
         try:
-            template = self.loader.load(self.environment, name)
+            template = self.environment.get_template(name)
         except jinja2.exceptions.TemplateNotFound:
             raise TemplateException("Template %s not found!"%(name))
         else:
