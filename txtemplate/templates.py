@@ -259,7 +259,7 @@ class Jinja2TemplateLoader(object):
 
         self.environment = jinja2.Environment()
         self.loader = jinja2.FileSystemLoader(
-            os.path.join(os.path.abspath(self.path)), encoding="utf-8"
+            os.path.joinos.path.abspath(self.path)), encoding="utf-8"
         )
 
     def load(self, name):
