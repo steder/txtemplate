@@ -1,0 +1,34 @@
+=====================================================
+ txTemplate - Twisted Wrappers for Template Engines
+=====================================================
+
+.. currentmodule:: txtemplate
+
+:Author: `Mike Steder
+ <http://github.com/steder/txtemplate>`_
+:Version: |release|
+:Date: 2012/10/06
+:Homepage: `txTemplate Homepage`_
+:Download: `txTemplate on PyPI`_
+:License: `MIT License`
+
+.. _ Homepage: http://github.com/steder/txtemplate
+
+.. currentmodule:: txtemplate
+
+.. module:: txtemplate
+   :synopsis: Twisted Wrappers for Template Engines
+
+.. index:: introduction
+
+txTemplate provides access to the following template engines:
+
+ - Clearsilver
+ - Genshi
+ - Jinja2
+
+API Documentation
+=================
+
+.. toctree::
+   :maxdepth: 2

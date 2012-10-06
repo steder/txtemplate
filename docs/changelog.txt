@@ -1,0 +1,24 @@
+.. currentmodule:: mock
+
+
+CHANGELOG
+=========
+
+2012/10/06 Version 1.0.2
+--------------------------------
+
+* Adding support for multiple template directories to the Jinja2 loader.
+* Switched StringIO to cStringIO for performance and unicode support.
+
+2012/06/17 Version 1.0.1
+--------------------------------
+
+* Performance improvements
+ - Adding passthrough for jinja2 environment options so we can set auto_reload=False
+ - updating tuning parameters CALL_DELAY and POPULATE_N_STEPS.
+* Removed distribute_setup.py and requiring distribute/setuptools already be installed.
+
+2012/02/29 Version 1.0.0
+-------------------------
+
+Initial release.

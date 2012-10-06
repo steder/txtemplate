@@ -4,7 +4,7 @@ from setuptools import setup
 
 
 setup(name='txTemplate',
-      version='1.0.1',
+      version='1.0.2',
       description='Twisted Adapters for Templating Engines',
       long_description=open("README.rst", "r").read(),
       author='Mike Steder',
@@ -22,5 +22,7 @@ setup(name='txTemplate',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python',
+          'Programming Language :: Python :: 2.6',
+          'Programming Language :: Python :: 2.7'
           ]
 )

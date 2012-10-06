@@ -174,6 +174,31 @@ class TestJinja2Templates(unittest.TestCase):
         return d
 
 
+class TestJinja2MultiplePaths(unittest.TestCase):
+    if templates.jinja2 is None:
+        skip = "Skipping Jinja2 tests because jinja2 is not installed."
+
+    def test_no_dir(self):
+        loader = templates.Jinja2TemplateLoader(None)
+        self.assertEqual(loader.paths, ['.'])
+
+    def test_no_dir_and_options(self):
+        loader = templates.Jinja2TemplateLoader(None, auto_reload=True)
+        self.assertEqual(loader.paths, ['.'])
+
+    def test_one_dir(self):
+        loader = templates.Jinja2TemplateLoader([TEMPLATE_DIR])
+        self.assertEqual(loader.paths, [TEMPLATE_DIR])
+
+    def test_multiple_dirs(self):
+        loader = templates.Jinja2TemplateLoader([TEMPLATE_DIR, TEMPLATE_DIR])
+        self.assertEqual(loader.paths, [TEMPLATE_DIR] * 2)
+
+    def test_multiple_dirs_and_options(self):
+        loader = templates.Jinja2TemplateLoader([TEMPLATE_DIR, TEMPLATE_DIR], auto_reload=True)
+        self.assertEqual(loader.paths, [TEMPLATE_DIR] * 2)
+
+
 class TestStringTemplates(unittest.TestCase):
     def setUp(self):
         self.c = {"request":"foo",
@@ -209,4 +234,3 @@ class TestStringTemplates(unittest.TestCase):
         template = self.loader.load("test.txt")
         d = template.render(**self.c)
         d.addCallback(self._success)
-

@@ -252,15 +252,32 @@ if jinja2 is not None:
 class Jinja2TemplateLoader(object):
     interface.implements(itemplate.ITemplateLoader)
 
-    def __init__(self, path, **options):
-        self.path = path
+    def __init__(self, paths, **options):
+        """
+
+        args:
+         - `paths`: a path or iterable of paths to search for templates
+           NOTE::
+             txtemplate ensures they are all absolute paths before
+             passing them to the underlying template engine.
+
+        Supported options:
+         - `auto_reload`: providing `auto_reload=True` will cause Jinja2
+           to check the filesystem for changes every time it tries to render
+           a template to ensure it has the most up to date template.
+
+        """
+        if not paths:
+            self.paths = [os.curdir]
+        elif isinstance(paths, basestring):
+            self.paths = [paths]
+        else:
+            self.paths = paths
         self.options = {"auto_reload": False}
         self.options.update(options)
-        if not self.path:
-            self.path = os.curdir
 
         self.loader = jinja2.FileSystemLoader(
-            os.path.join(os.path.abspath(self.path)),
+            [os.path.abspath(p) for p in self.paths],
             encoding="utf-8"
         )
         self.environment = jinja2.Environment(loader=self.loader, **self.options)
