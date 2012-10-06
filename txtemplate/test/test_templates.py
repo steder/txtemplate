@@ -178,22 +178,25 @@ class TestJinja2MultiplePaths(unittest.TestCase):
     if templates.jinja2 is None:
         skip = "Skipping Jinja2 tests because jinja2 is not installed."
 
-    def test_onedir(self):
-        loader = templates.Jinja2TemplateLoader(TEMPLATE_DIR)
-        self.assertEqual(self.loader.paths, [])
+    def test_no_dir(self):
+        loader = templates.Jinja2TemplateLoader(None)
+        self.assertEqual(loader.paths, ['.'])
 
-    def test_list_w_onedir(self):
-        loader = templates.Jinja2TemplateLoader(paths=[TEMPLATE_DIR])
-        self.assertEqual(self.loader.paths, [])
+    def test_no_dir_and_options(self):
+        loader = templates.Jinja2TemplateLoader(None, auto_reload=True)
+        self.assertEqual(loader.paths, ['.'])
 
-    def test_list_w_multiple_dirs(self):
-        loader = templates.Jinja2TemplateLoader(paths=[TEMPLATE_DIR, TEMPLATE_DIR])
-        self.assertEqual(self.loader.paths, [])
+    def test_one_dir(self):
+        loader = templates.Jinja2TemplateLoader([TEMPLATE_DIR])
+        self.assertEqual(loader.paths, [TEMPLATE_DIR])
 
-    def test_list_w_path_and_paths(self):
-        loader = templates.Jinja2TemplateLoader(path=TEMPLATE_DIR, paths=[TEMPLATE_DIR, TEMPLATE_DIR])
-        self.assertEqual(self.loader.paths, [])
+    def test_multiple_dirs(self):
+        loader = templates.Jinja2TemplateLoader([TEMPLATE_DIR, TEMPLATE_DIR])
+        self.assertEqual(loader.paths, [TEMPLATE_DIR] * 2)
 
+    def test_multiple_dirs_and_options(self):
+        loader = templates.Jinja2TemplateLoader([TEMPLATE_DIR, TEMPLATE_DIR], auto_reload=True)
+        self.assertEqual(loader.paths, [TEMPLATE_DIR] * 2)
 
 
 class TestStringTemplates(unittest.TestCase):
