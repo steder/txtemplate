@@ -4,7 +4,7 @@ from setuptools import setup
 
 
 setup(name='txTemplate',
-      version='1.0.2',
+      version='1.0.3',
       description='Twisted Adapters for Templating Engines',
       long_description=open("README.rst", "r").read(),
       author='Mike Steder',
@@ -13,8 +13,7 @@ setup(name='txTemplate',
       packages=['txtemplate',
                 'txtemplate.test'],
       test_suite="txtemplate.test",
-      install_requires=["genshi",
-                        "jinja2",
+      install_requires=["jinja2",
                         "twisted"],
       license="MIT",
       classifiers=[
