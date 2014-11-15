@@ -138,6 +138,7 @@ class GenshiTemplateAdapter(object):
         self._stream = None
         self.template = template
         self.delayedCall = None
+        self.serialize_method = 'html'
 
     def _populateBuffer(self, stream, n):
         """
@@ -179,7 +180,7 @@ class GenshiTemplateAdapter(object):
         self._stream = self.template.generate(**kwargs)
         self._deferred = defer.Deferred()
         self._deferred.addCallbacks(self._rendered, self._failed)
-        s = self._stream.serialize()
+        s = self._stream.serialize(method=self.serialize_method)
         self.delayedCall = reactor.callLater(CALL_DELAY, self._populateBuffer, s, POPULATE_N_STEPS)
         return self._deferred
 
