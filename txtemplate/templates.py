@@ -200,18 +200,23 @@ if genshitemplate is not None:
 class GenshiTemplateLoader(object):
     interface.implements(itemplate.ITemplateLoader)
 
-    def __init__(self, path=None):
+    def __init__(self, path=None, auto_reload=True,
+                 default_encoding='UTF-8', max_cache_size=25, default_class=None,
+                 variable_lookup='strict', allow_exec=True, callback=None):
         self.path = path
         if not self.path:
             self.path = os.curdir
 
         self.loader = genshitemplate.TemplateLoader(
-            os.path.join(os.path.abspath(self.path)), auto_reload=True
+            os.path.join(os.path.abspath(self.path)),
+            auto_reload=auto_reload,
+            default_encoding=default_encoding, max_cache_size=max_cache_size, default_class=default_class,
+            variable_lookup=variable_lookup, allow_exec=allow_exec, callback=callback
         )
 
     def load(self, name):
         try:
-            template = self.loader.load(name, encoding="UTF-8")
+            template = self.loader.load(name)
         except genshitemplate.loader.TemplateNotFound:
             raise TemplateException("Template %s not found!"%(name))
         else:
