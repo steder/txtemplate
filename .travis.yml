@@ -6,7 +6,7 @@ python:
 # command to install dependencies
 install:
   - pip install .
-  - pip install genshi
+  - pip install nose
 
 # command to run tests
-script: python setup.py test
+script: nosetests -v
