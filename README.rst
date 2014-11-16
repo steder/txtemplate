@@ -2,6 +2,9 @@
 txTemplate
 =================================
 
+.. image:: https://travis-ci.org/steder/txtemplate.svg?branch=master
+    :target: https://travis-ci.org/steder/txtemplate
+
 txTemplate provides adapters for a few popular template engines
 to make them easily callable and usable within Twisted Web.
 
@@ -74,6 +77,3 @@ to render a lovely Genshi template to say Hello World in HTML::
 
 This example is included in `txtemplate/examples/txweb.py` and the
 `root.xhtml` template is in `txtemplate/examples/templates/root.xhtml`.
-
-
-
