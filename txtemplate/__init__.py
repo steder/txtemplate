@@ -17,7 +17,7 @@ from .templates import GenshiTemplateLoader
 from .templates import Jinja2TemplateLoader
 
 
-__version__ = "1.0.2"
+__version__ = "1.0.4"
 
 
 __all__ = ["ClearsilverTemplateLoader",
